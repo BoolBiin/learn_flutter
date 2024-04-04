@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
       showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
+          return const AlertDialog(
             content: Text('Email hoặc Password không để trống'),
           );
         },
@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
         showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
+            return const AlertDialog(
               content: Text('Confirm password không chính xác'),
             );
           },
@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
         showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
+            return const AlertDialog(
               content: Text('Email và password không chính xác'),
             );
           },
@@ -112,13 +112,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: MediaQuery.of(context).size.height /
                     4), // Tạo khoảng cách từ top screen
             MyShopLogo(),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             Center(
               child: Card(
                 elevation: 8.0, // Đổ bóng cho Card
-                margin: EdgeInsets.symmetric(horizontal: 40, vertical: 0),
+                margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 0),
                 child: Padding(
-                  padding: EdgeInsets.all(30),
+                  padding: const EdgeInsets.all(30),
                   child: Form(
                     child: Column(
                       mainAxisSize: MainAxisSize
@@ -126,36 +126,38 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: <Widget>[
                         TextFormField(
                           controller: emailController,
-                          decoration: InputDecoration(labelText: 'E-Mail'),
+                          decoration:
+                              const InputDecoration(labelText: 'E-Mail'),
                         ),
                         TextFormField(
                           controller: passwordController,
                           obscureText: true, // Che dấu mật khẩu
-                          decoration: InputDecoration(labelText: 'Password'),
+                          decoration:
+                              const InputDecoration(labelText: 'Password'),
                         ),
                         if (!isLogin)
                           TextFormField(
                             controller: confirmPasswordController,
                             obscureText: true,
-                            decoration:
-                                InputDecoration(labelText: 'Confirm Password'),
+                            decoration: const InputDecoration(
+                                labelText: 'Confirm Password'),
                           ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         ElevatedButton(
-                          child: Text(
-                            isLogin ? 'LOGIN' : 'SIGN UP',
-                            style: TextStyle(color: Colors.white),
-                          ),
                           onPressed: _submitForm,
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 isLogin ? Colors.purple : Colors.orange),
                           ),
+                          child: Text(
+                            isLogin ? 'LOGIN' : 'SIGN UP',
+                            style: const TextStyle(color: Colors.white),
+                          ),
                         ),
                         TextButton(
+                          onPressed: toggleForm,
                           child: Text(
                               isLogin ? 'SIGNUP INSTEAD' : 'LOGIN INSTEAD'),
-                          onPressed: toggleForm,
                         ),
                       ],
                     ),
@@ -176,11 +178,11 @@ class MyShopLogo extends StatelessWidget {
     return Transform.rotate(
       angle: -0.2, // Góc xoay được tính bằng radian
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 120, vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 15),
         decoration: BoxDecoration(
           color: Colors.red,
           borderRadius: BorderRadius.circular(24),
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [Colors.red, Colors.orangeAccent],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -193,7 +195,7 @@ class MyShopLogo extends StatelessWidget {
             ),
           ],
         ),
-        child: Text(
+        child: const Text(
           'MyShop',
           style: TextStyle(
             color: Colors.white,
@@ -218,7 +220,7 @@ class HomePage extends StatelessWidget {
       ),
       body: Center(
         child: ElevatedButton(
-          child: Text('Logout'),
+          child: const Text('Logout'),
           onPressed: () {
             Navigator.pop(context);
           },
