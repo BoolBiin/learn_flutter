@@ -50,8 +50,6 @@ class _MyHomePageState extends State<MyHomePage> {
     final String password = passwordController.text;
     final String confirmPassword = confirmPasswordController.text;
 
-    // // Bạn có thể sử dụng các giá trị này để thực hiện logic xác thực, v.v.
-    // print('Email: $email, Password: $password, Confirm Password: $confirmPassword');
     if (email == '' || password == '') {
       showDialog(
         context: context,
