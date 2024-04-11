@@ -51,7 +51,6 @@ class _MyHomePageState extends State<MyHomePage> {
       if (index != -1) {
         // Item exists, update it
         carts[index].qty += productCart.qty;
-        carts[index].amount += productCart.amount;
       } else {
         // Item doesn't exist, add it
         carts.add(productCart);
@@ -70,7 +69,10 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("Chào mừng"),
         actions: [
-          ShoppingCartBadge(itemCount: soLuong),
+          ShoppingCartBadge(
+            itemCount: soLuong,
+            lstProductCart: carts,
+          ),
         ],
       ),
 
@@ -122,8 +124,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
 class ShoppingCartBadge extends StatelessWidget {
   final int itemCount;
+  final List<ProductCart> lstProductCart;
 
-  ShoppingCartBadge({required this.itemCount});
+  ShoppingCartBadge({required this.itemCount, required this.lstProductCart});
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +135,13 @@ class ShoppingCartBadge extends StatelessWidget {
         IconButton(
           icon: Icon(Icons.shopping_cart),
           onPressed: () {
-            // Handle cart icon press
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DetailCart(
+                        lstProcductCart: lstProductCart,
+                      )),
+            );
           },
           iconSize: 35.0,
         ),
@@ -182,8 +191,7 @@ class _ProductItemCardState extends State<ProductItemCard> {
         title: widget.product.title,
         price: widget.product.price,
         imageUrl: widget.product.imageUrl,
-        qty: 1,
-        amount: int.parse(widget.product.price)
+        qty: 1
         // ... other properties
         );
 
@@ -277,7 +285,7 @@ class DetailProduct extends StatelessWidget {
               ),
               Positioned(
                 left: 20,
-                top: 50,
+                top: 20,
                 child: ElevatedButton(
                   child: Text('<='),
                   onPressed: () {
@@ -314,6 +322,102 @@ class DetailProduct extends StatelessWidget {
   }
 }
 
+class DetailCart extends StatelessWidget {
+  final List<ProductCart> lstProcductCart;
+  const DetailCart({super.key, required this.lstProcductCart});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 100,
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Go back!'),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: DataTable(
+            columns: <DataColumn>[
+              DataColumn(
+                label: Text(
+                  'Title',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+              ),
+              DataColumn(
+                label: Text(
+                  'Price',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+              ),
+              DataColumn(
+                label: Text(
+                  'Quantity',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+              ),
+              DataColumn(
+                label: Text(
+                  'Amount',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+              ),
+            ],
+            rows: lstProcductCart
+                .map((product) => DataRow(cells: [
+                      DataCell(
+                        Container(
+                          // Set background color here
+                          child: Text(
+                            product.title,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      DataCell(
+                        Container(
+                          child: Text(
+                            product.price,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      DataCell(
+                        Container(
+                          // Set background color here
+                          child: Text(
+                            product.qty.toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      DataCell(
+                        Container(
+                          // Set background color here
+                          child: Text(
+                            '${(int.parse(product.price) * product.qty)}',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ]))
+                .toList(),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class Product {
   late String title;
   late String price;
@@ -331,11 +435,9 @@ class ProductCart {
   late String price;
   late String imageUrl;
   late int qty;
-  late int amount;
   ProductCart(
       {required this.title,
       required this.price,
       required this.imageUrl,
-      required this.qty,
-      required this.amount});
+      required this.qty});
 }
