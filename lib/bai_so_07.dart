@@ -34,7 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
       Response response = await dio.get(
           'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1');
       if (response.statusCode == 200) {
-        var data = jsonDecode(response.data);
+        // var data = jsonDecode(response.data);
+        var data = response.data;
         var movies = data['results'];
 
         List<Result> movieList =
@@ -57,7 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
       Response response = await dio.get(
           'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1');
       if (response.statusCode == 200) {
-        var data = jsonDecode(response.data);
+        developer.log(response.data.toString());
+        var data = response.data;
         var movies = data['results'];
 
         List<Result> movieList =
@@ -147,14 +149,52 @@ class _MyListPhimState extends State<MyListPhim> {
         } else if (snapshot.hasData) {
           final results = snapshot.data!;
           return ListView.separated(
-              itemBuilder: (context, index) => ListTile(
-                    title: Text(results[index].title ?? '--'),
-                    subtitle: Text(results[index].overview ?? '--'),
-                    leading: CircleAvatar(
-                      backgroundImage:
-                          AssetImage(results[index].backdroppath ?? ""),
+              itemBuilder: (context, index) {
+                final movie = results[index];
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 200,
+                      height: 200,
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                'https://image.tmdb.org/t/p/w500${movie.backdroppath ?? ""}'),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.brown, width: 0.5)),
                     ),
-                  ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            movie.title ?? "",
+                            style: const TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            movie.overview ?? "",
+                            maxLines: 5,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(height: 2, fontSize: 15),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                );
+              },
               separatorBuilder: (context, index) => const Divider(),
               itemCount: results.length);
         } else {
