@@ -8,10 +8,22 @@ class BottomBarActiveItem extends StatelessWidget {
     required this.onTap,
     required this.scrollPosition,
     required this.kIconSize,
+    required this.showLabel,
+    this.label,
+    this.labelStyle,
   });
 
   /// item index
   final int index;
+
+  /// String to indicate the label item
+  final String? label;
+
+  /// Value to indicate the label Style
+  final TextStyle? labelStyle;
+
+  /// Boolean to show the item label
+  final bool showLabel;
 
   final double kIconSize;
 
@@ -27,13 +39,33 @@ class BottomBarActiveItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final icon = itemWidget;
-    return GestureDetector(
-      child: SizedBox.fromSize(
-        size: Size(kIconSize, kIconSize),
-        child: Opacity(
-            opacity: kPi * 2 * (scrollPosition % 1) == 0 ? 1 : 0, child: icon),
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          GestureDetector(
+            child: SizedBox.fromSize(
+              size: Size(kIconSize, kIconSize),
+              child: Opacity(
+                  opacity: kPi * 2 * (scrollPosition % 1) == 0 ? 1 : 0,
+                  child: icon),
+            ),
+            onTap: () => onTap(index),
+          ),
+          if (label != null && showLabel) ...[
+            const SizedBox(height: 35.0),
+            Text(
+              label!,
+              style: labelStyle ??
+                  TextStyle(
+                      color: Colors.grey[700],
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.bold),
+            ),
+          ],
+        ],
       ),
-      onTap: () => onTap(index),
+      // ],
     );
   }
 }

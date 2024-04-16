@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
               /// Provide NotchBottomBarController
               notchBottomBarController: _controller,
               color: Colors.white,
-              showLabel: false,
+              showLabel: true,
               shadowElevation: 5,
               kBottomRadius: 18.0,
               // notchShader: const SweepGradient(
@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
               /// restart app if you change removeMargins
               removeMargins: false,
               bottomBarHeight: 80,
-              bottomBarWidth: 500,
+              bottomBarWidth: MediaQuery.of(context).size.width,
               showShadow: false,
               durationInMilliSeconds: 200, //300,
               elevation: 1,
@@ -109,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Icons.gif,
                     color: Colors.green,
                   ),
-                  itemLabel: 'Page 2',
+                  itemLabel: 'Page 2333',
                 ),
                 BottomBarItem(
                   inActiveItem: Icon(

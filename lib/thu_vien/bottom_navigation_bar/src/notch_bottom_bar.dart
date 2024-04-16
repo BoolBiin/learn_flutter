@@ -14,6 +14,9 @@ class AnimatedNotchBottomBar extends StatefulWidget {
   /// Controller for animation
   final NotchBottomBarController notchBottomBarController;
 
+  /// tab mặc định khi load
+  final int defaultIndex;
+
   /// List of items of bottom bar
   final List<BottomBarItem> bottomBarItems;
 
@@ -84,6 +87,7 @@ class AnimatedNotchBottomBar extends StatefulWidget {
   const AnimatedNotchBottomBar({
     Key? key,
     required this.notchBottomBarController,
+    required this.defaultIndex,
     required this.bottomBarItems,
     required this.onTap,
     required this.kIconSize,
@@ -249,6 +253,9 @@ class _AnimatedNotchBottomBarState extends State<AnimatedNotchBottomBar>
                               itemWidget: widget.bottomBarItems[i].activeItem,
                               scrollPosition: scrollPosition,
                               onTap: widget.onTap,
+                              label: widget.bottomBarItems[i].itemLabel,
+                              showLabel: widget.showLabel,
+                              labelStyle: widget.itemLabelStyle,
                               kIconSize: widget.kIconSize,
                             ),
                           ),

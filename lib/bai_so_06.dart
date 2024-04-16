@@ -246,9 +246,8 @@ class DetailProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: product.title,
-      home: Scaffold(
+    return Container(
+      child: Scaffold(
         // appBar: AppBar(
         //   title: Text(product.title),
         // ),
@@ -328,92 +327,94 @@ class DetailCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 100,
-        ),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Go back!'),
-        ),
-        SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: DataTable(
-            columns: <DataColumn>[
-              DataColumn(
-                label: Text(
-                  'Title',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-              ),
-              DataColumn(
-                label: Text(
-                  'Price',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-              ),
-              DataColumn(
-                label: Text(
-                  'Quantity',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-              ),
-              DataColumn(
-                label: Text(
-                  'Amount',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-              ),
-            ],
-            rows: lstProcductCart
-                .map((product) => DataRow(cells: [
-                      DataCell(
-                        Container(
-                          // Set background color here
-                          child: Text(
-                            product.title,
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      DataCell(
-                        Container(
-                          child: Text(
-                            product.price,
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      DataCell(
-                        Container(
-                          // Set background color here
-                          child: Text(
-                            product.qty.toString(),
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      DataCell(
-                        Container(
-                          // Set background color here
-                          child: Text(
-                            '${(int.parse(product.price) * product.qty)}',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ]))
-                .toList(),
+    return Scaffold(
+      body: Column(
+        children: [
+          SizedBox(
+            height: 100,
           ),
-        ),
-      ],
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Go back!'),
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: DataTable(
+              columns: <DataColumn>[
+                DataColumn(
+                  label: Text(
+                    'Title',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Price',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Quantity',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Amount',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+              ],
+              rows: lstProcductCart
+                  .map((product) => DataRow(cells: [
+                        DataCell(
+                          Container(
+                            // Set background color here
+                            child: Text(
+                              product.title,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        DataCell(
+                          Container(
+                            child: Text(
+                              product.price,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        DataCell(
+                          Container(
+                            // Set background color here
+                            child: Text(
+                              product.qty.toString(),
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        DataCell(
+                          Container(
+                            // Set background color here
+                            child: Text(
+                              '${(int.parse(product.price) * product.qty)}',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ]))
+                  .toList(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
