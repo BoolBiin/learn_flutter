@@ -165,35 +165,6 @@ class _MyListPhimState extends State<MyListPhim> {
   }
 }
 
-class KetQua extends StatefulWidget {
-  Future<Root> ketQua;
-  KetQua({super.key, required this.ketQua});
-
-  @override
-  State<KetQua> createState() => _KetQuaState();
-}
-
-class _KetQuaState extends State<KetQua> {
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: widget.ketQua,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text('Lỗi: ${snapshot.error}');
-        } else if (snapshot.hasData) {
-          final results = snapshot.data!;
-          return Text(results.toString());
-        } else {
-          return Text("Không có dữ liệu");
-        }
-      },
-    );
-  }
-}
-
 class Result {
   // bool? adult;
   String? backdroppath;
